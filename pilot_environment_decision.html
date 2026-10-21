@@ -281,7 +281,6 @@
         <div class="pros-cons-section pros">
           <div class="pc-label pros"><span class="dot"></span>Advantages</div>
           <ul class="pc-list">
-            <li>Real employee data — reflects actual benefit elections and history</li>
             <li>No separate environment approval required to begin</li>
             <li>Carrier file validation is possible — downstream data can be tested end-to-end</li>
             <li>Highest real-world signal — participants experience the actual product as it will exist at GA</li>
@@ -291,16 +290,12 @@
         <div class="pros-cons-section cons">
           <div class="pc-label cons"><span class="dot"></span>Constraints</div>
           <ul class="pc-list">
-            <li>Scenario coverage is limited — only organic qualifying life events trigger participation
-              <span class="note">Not compatible with Options 2 or 3 Track B (controlled scenario assignment)</span>
-            </li>
             <li>Participants' changes are real and permanent until data refresh
               <span class="note">Elections made in EC Benefits during the pilot will be live data</span>
             </li>
             <li><strong>Requires a full data refresh before GA</strong> — pilot activity must be overwritten prior to August 2027
               <span class="note">See critical requirement below</span>
             </li>
-            <li>Only viable path is Coffee Drip (Option 1) — reactive, event-driven only</li>
           </ul>
         </div>
       </div>
@@ -326,12 +321,10 @@
         <div class="pros-cons-section cons">
           <div class="pc-label cons"><span class="dot"></span>Constraints</div>
           <ul class="pc-list">
-            <li>Requires formal approval before use
-              <span class="note">Sign-off must be obtained before December planning</span>
+            <li>Communicating QA environment selection may surface stakeholder objections — raise and resolve before December to avoid blocking the path
+              <span class="note">Who holds approval authority and what does sign-off require?</span>
             </li>
-            <li>Simulated data may not surface all real-world edge cases or data quality issues</li>
             <li>Carrier file validation is not applicable in a test environment</li>
-            <li>Participant experience has some artificiality — test data vs. their actual benefit record</li>
           </ul>
         </div>
       </div>
@@ -375,7 +368,7 @@
         <tr>
           <td>Data accuracy</td>
           <td>Real employee elections and history</td>
-          <td>Simulated — may not cover all edge cases</td>
+          <td>Real employee data loaded — same fidelity as Production</td>
         </tr>
         <tr>
           <td>Participant data risk</td>
@@ -389,7 +382,7 @@
         </tr>
         <tr>
           <td>Scenario flexibility</td>
-          <td>Limited — organic life events only</td>
+          <td>Full — controlled scenarios assignable; not limited to organic events</td>
           <td>Full — any scenario assignable</td>
         </tr>
         <tr>
@@ -404,13 +397,13 @@
         </tr>
         <tr>
           <td>Compatible pilot options</td>
-          <td>Option 1 only (Coffee Drip)</td>
-          <td>Options 1, 2, and 3</td>
+          <td>All options viable (1, 2, 3, 4)</td>
+          <td>All options viable (1, 2, 3, 4)</td>
         </tr>
         <tr>
           <td>Real-world signal quality</td>
-          <td>High</td>
-          <td>Moderate — some test artificiality</td>
+          <td>High — live system, real benefit records</td>
+          <td>High — real employee data; changes isolated to test env</td>
         </tr>
         <tr class="highlight">
           <td>Pre-GA data refresh required</td>
@@ -419,8 +412,8 @@
         </tr>
         <tr class="highlight">
           <td>Recommended for</td>
-          <td>Option 1 (Coffee Drip) only</td>
-          <td>Options 2 (Visibility Path) and 3 (Hybrid Track B)</td>
+          <td>Any option — decision driven by data risk tolerance and refresh planning</td>
+          <td>Any option — preferred when avoiding live data risk</td>
         </tr>
       </tbody>
     </table>
