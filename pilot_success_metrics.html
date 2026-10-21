@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EC Benefits Pilot — Success Metrics</title>
+  <style>
+    :root {
+      --blue: #0070F2; --blue-bg: #EFF6FF; --blue-border: #BFDBFE;
+      --purple: #6E44FF; --purple-bg: #F3EEFF; --purple-border: #DDD6FE;
+      --green: #00875A; --green-bg: #ECFDF5; --green-border: #A7F3D0;
+      --amber: #D97706; --amber-bg: #FFFBEB; --amber-border: #FCD34D;
+      --rose: #E11D48; --rose-bg: #FFF1F2; --rose-border: #FECDD3;
+      --surface: #F5F7FA; --card: #fff; --text: #111827; --text-2: #6B7280; --border: #E5E7EB;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--surface); color: var(--text); font-size: 14px; line-height: 1.5; }
+
+    .hdr { background: #fff; border-bottom: 1px solid var(--border); padding: 24px 48px 20px; }
+    .hdr h1 { font-size: 19px; font-weight: 700; margin-bottom: 5px; }
+    .hdr-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); }
+    .hdr-meta span::before { content: '· '; color: #D1D5DB; }
+    .hdr-meta span:first-child::before { content: ''; }
+
+    .main { max-width: 980px; margin: 0 auto; padding: 28px 24px 64px; }
+
+    /* North Star */
+    .north-star {
+      background: var(--blue-bg); border: 1.5px solid var(--blue);
+      border-radius: 10px; padding: 16px 20px; margin-bottom: 24px;
+      display: flex; gap: 12px; align-items: center;
+    }
+    .ns-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); margin-bottom: 3px; }
+    .ns-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; }
+
+    /* Section label */
+    .sec-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-2); margin-bottom: 10px; }
+
+    /* Feedback Buckets */
+    .buckets { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .bucket { border-radius: 8px; padding: 14px 16px; border: 1.5px solid; }
+    .b1 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .b2 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .b3 { background: var(--green-bg); border-color: var(--green-border); }
+    .b-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; }
+    .b1 .b-num { color: var(--blue); }
+    .b2 .b-num { color: var(--purple); }
+    .b3 .b-num { color: var(--green); }
+    .b-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .b-def { font-size: 12px; color: #374151; margin-bottom: 6px; }
+    .b-prompt { font-size: 11px; font-style: italic; color: var(--text-2); border-top: 1px solid rgba(0,0,0,.07); padding-top: 6px; margin-top: 2px; }
+
+    /* Metrics table */
+    .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 11px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; background: var(--surface); border-bottom: 2px solid var(--border); text-align: left; color: var(--text-2);
+    }
+    tbody td { padding: 10px 14px; font-size: 12.5px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #FAFAFA; }
+    td.metric-name { font-weight: 600; color: var(--text); white-space: nowrap; width: 200px; }
+    td.target { font-weight: 600; color: var(--text); }
+    .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+    .bq  { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-border); }
+    .bql { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+    .bop { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-border); }
+    .note { display: block; font-size: 11px; color: var(--text-2); margin-top: 2px; }
+    tr.section-row td { background: var(--surface); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-2); padding: 7px 14px; border-bottom: 1px solid var(--border); }
+
+    /* Option targets */
+    .opt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+    .opt-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    .opt-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; color: var(--text-2); }
+    .opt-name { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .opt-card ul { list-style: none; }
+    .opt-card ul li { font-size: 12px; color: #374151; padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .opt-card ul li:last-child { border-bottom: none; }
+    .opt-card ul li span { display: block; font-size: 10px; color: var(--text-2); }
+    .oc1 { border-top: 3px solid var(--rose); }
+    .oc2 { border-top: 3px solid var(--blue); }
+    .oc3 { border-top: 3px solid var(--purple); }
+    .oc4 { border-top: 3px solid var(--green); }
+    .oc1 .opt-name { color: var(--rose); }
+    .oc2 .opt-name { color: var(--blue); }
+    .oc3 .opt-name { color: var(--purple); }
+    .oc4 .opt-name { color: var(--green); }
+
+    /* Open questions */
+    .oq { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 10px; padding: 16px 20px; }
+    .oq h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: #92400E; margin-bottom: 10px; }
+    .oq ul { list-style: none; }
+    .oq ul li { font-size: 12.5px; color: #78350F; padding: 4px 0 4px 16px; position: relative; border-bottom: 1px solid rgba(245,158,11,.2); }
+    .oq ul li:last-child { border-bottom: none; }
+    .oq ul li::before { content: '?'; position: absolute; left: 0; font-weight: 800; color: #D97706; }
+  </style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>SAP Runs on SAP — EC Benefits Pilot: Success Metrics</h1>
+  <div class="hdr-meta">
+    <span>Pilot: Jan 13 – Apr 30, 2027</span>
+    <span>GA Target: August 2027</span>
+    <span>For review: Stephanie · Jill · Kirstae</span>
+
+    <span>Draft — Oct 21, 2026</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- North Star -->
+  <div class="north-star">
+    <div>
+      <div class="ns-label">North Star</div>
+      <div class="ns-text">Build confidence in the August 2027 EC Benefits rollout by engaging pilot participants within SuccessFactors to test out real-world benefit scenarios in EC Benefits, and pressure test that EC Benefits is prepared to support 17,000 US SAP employees at GA.</div>
+    </div>
+  </div>
+
+  <!-- Success Metrics Table -->
+  <div class="sec-label">Success Metrics</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:200px;">Metric</th>
+          <th style="width:80px;">Type</th>
+          <th>Target</th>
+          <th>How Measured</th>
+          <th style="width:110px;">Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-row"><td colspan="5">Participation</td></tr>
+        <tr>
+          <td class="metric-name">Participant Activation Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">TBD by option<span class="note">See targets below</span></td>
+          <td>% of invited/eligible employees who complete ≥1 scenario or submit feedback</td>
+          <td>PM / SAP HR</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Scenario Completion Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">≥70%<span class="note">Options 3 &amp; 4 only</span></td>
+          <td>Scenarios completed ÷ scenarios assigned</td>
+          <td>PM</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Scenario Type Coverage</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">≥80% of types tested<span class="note">By end of Wave 2 (Feb 28)</span></td>
+          <td># scenario types tested ÷ # defined (new hire, QLE, FSA, HSA, time-elapsed)</td>
+          <td>PM / Product</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Time-Elapsed Return Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">≥60%<span class="note">Options 3 &amp; 4 only</span></td>
+          <td>% of Wave 1 participants who return to complete Cycle 2 follow-up in Wave 2</td>
+          <td>PM</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="5">Feedback Volume &amp; Quality</td></tr>
+        <tr>
+          <td class="metric-name">Total Feedback Items</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">TBD by option<span class="note">See targets below</span></td>
+          <td>Survey responses + freeform entries; tracked by wave</td>
+          <td>Product</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Categorization Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">≥80% categorizable</td>
+          <td>% of items clearly sortable into Bucket 1 / 2 / 3 without manual interpretation</td>
+          <td>Product</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Bucket 1 Share (end of pilot)</td>
+          <td><span class="badge bql">Qual</span></td>
+          <td class="target">≤15% of total<span class="note">Heavy Bucket 1 = product quality risk</span></td>
+          <td>Bucket 1 items ÷ total categorized items; tracked wave over wave</td>
+          <td>Product</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="5">Action &amp; Delivery</td></tr>
+        <tr>
+          <td class="metric-name">Issue-to-Ticket Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">100% Bucket 1 → Jira<span class="note">≥50% Bucket 2 → Aha card; within 2 weeks</span></td>
+          <td>Feedback items with a corresponding Jira ticket or Aha card ÷ total categorized</td>
+          <td>Product</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Time to First Actionable Feedback</td>
+          <td><span class="badge bop">Ops</span></td>
+          <td class="target">≤14 days (Opt 3&amp;4)<span class="note">≤30 days (Opt 1&amp;2)</span></td>
+          <td>Days from kickoff to first feedback item routed to Jira or Aha</td>
+          <td>PM / Product</td>
+        </tr>
+        <tr>
+          <td class="metric-name">H1 Incorporation Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">TBD<span class="note">Requires engineering capacity alignment</span></td>
+          <td>Wave 1 Bucket 1+2 items addressed in H1 2027 release ÷ total Bucket 1+2 items</td>
+          <td>Product / Eng</td>
+        </tr>
+        <tr>
+          <td class="metric-name">Feedback Demoed Back to Participants</td>
+          <td><span class="badge bql">Qual</span></td>
+          <td class="target">≥1 demo per monthly session<span class="note">Starting February</span></td>
+          <td>Each feedback session includes a short demo of at least one shipped item from prior feedback</td>
+          <td>PM / Product</td>
+        </tr>
+
+        <tr class="section-row"><td colspan="5">Participant Experience</td></tr>
+        <tr>
+          <td class="metric-name">Participant Confidence Score</td>
+          <td><span class="badge bql">Qual</span></td>
+          <td class="target">≥4.0 / 5.0<span class="note">Options 3 &amp; 4; end of April</span></td>
+          <td>"How confident are you in completing a benefits change on your own at GA?" — 1–5 scale</td>
+          <td>PM</td>
+        </tr>
+        <tr>
+          <td class="metric-name">HR Admin Readiness Score</td>
+          <td><span class="badge bql">Qual</span></td>
+          <td class="target">≥3.5 baseline → ≥4.0 at GA<span class="note">Options 3 &amp; 4 only</span></td>
+          <td>"How prepared is your team to support employees using EC Benefits at GA?" — 1–5 scale</td>
+          <td>SAP HR</td>
+        </tr>
+        <tr>
+          <td class="metric-name">GA Awareness Rate</td>
+          <td><span class="badge bq">Quant</span></td>
+          <td class="target">≥90%</td>
+          <td>% of active pilot participants who understand EC Benefits replaces BF in August 2027</td>
+          <td>SAP HR / PM</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Feedback Buckets -->
+  <div class="sec-label">Feedback Classification — All feedback routes into one of three buckets</div>
+  <div class="buckets">
+    <div class="bucket b1">
+      <div class="b-num">Bucket 1</div>
+      <div class="b-name">Base Function</div>
+      <div class="b-def">Does it work as designed?</div>
+      <div class="b-prompt">"I tried X, expected Y, got Z."</div>
+    </div>
+    <div class="bucket b2">
+      <div class="b-num">Bucket 2</div>
+      <div class="b-name">Enhancement Ideas</div>
+      <div class="b-def">Works, but the experience could be better.</div>
+      <div class="b-prompt">"This works, but it would be easier if…"</div>
+    </div>
+    <div class="bucket b3">
+      <div class="b-num">Bucket 3</div>
+      <div class="b-name">Net New Capabilities</div>
+      <div class="b-def">Capabilities not yet on the roadmap.</div>
+      <div class="b-prompt">"I wish I could…" or "It would be great if…"</div>
+    </div>
+  </div>
+
+  <!-- Option Targets -->
+  <div class="sec-label">Expected Volume Targets — By Option</div>
+  <div class="opt-grid">
+    <div class="opt-card oc1">
+      <div class="opt-num">Option 1</div>
+      <div class="opt-name">Free For All</div>
+      <ul>
+        <li>Active participants<span>Unknown — self-selected</span></li>
+        <li>Feedback items<span>Variable / unpredictable</span></li>
+        <li>Scenario coverage<span>Not applicable</span></li>
+        <li>Time to first feedback<span>Same week (quality uncertain)</span></li>
+        <li>H1 incorporation<span>Low</span></li>
+      </ul>
+    </div>
+    <div class="opt-card oc2">
+      <div class="opt-num">Option 2</div>
+      <div class="opt-name">Coffee Drip</div>
+      <ul>
+        <li>Active participants<span>5–15 / month (organic)</span></li>
+        <li>Feedback items<span>20–60 total</span></li>
+        <li>Scenario coverage<span>Low — organic gaps likely</span></li>
+        <li>Time to first feedback<span>4–6 weeks</span></li>
+        <li>H1 incorporation<span>Low–Medium</span></li>
+      </ul>
+    </div>
+    <div class="opt-card oc3">
+      <div class="opt-num">Option 3 ★</div>
+      <div class="opt-name">Visibility Path</div>
+      <ul>
+        <li>Active participants<span>Up to 40 (recruited)</span></li>
+        <li>Feedback items<span>80–200 total</span></li>
+        <li>Scenario coverage<span>≥80% of types by Wave 2</span></li>
+        <li>Time to first feedback<span>≤14 days</span></li>
+        <li>H1 incorporation<span>High</span></li>
+      </ul>
+    </div>
+    <div class="opt-card oc4">
+      <div class="opt-num">Option 4</div>
+      <div class="opt-name">Hybrid</div>
+      <ul>
+        <li>Active participants<span>40 + ongoing organic</span></li>
+        <li>Feedback items<span>100–250+</span></li>
+        <li>Scenario coverage<span>≥80% of types by Wave 2</span></li>
+        <li>Time to first feedback<span>≤14 days (Track B)</span></li>
+        <li>H1 incorporation<span>Highest</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Open Questions -->
+  <div class="oq">
+    <h3>Open Questions</h3>
+    <ul>
+      <li>What is engineering's H1 2027 capacity for pilot feedback — needed to set the H1 Incorporation Rate target</li>
+      <li>What survey tool captures feedback at end of the EC Benefits session? Survey questions must map to the 3-bucket framework before Wave 1</li>
+      <li>Who owns AI-assisted feedback triage, and what is the SLA for routing to Jira or Aha?</li>
+      <li>Would this test population need to continue testing post-H1 2027 — all participants, a subset, or an additional ~6-week window before GA?</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
