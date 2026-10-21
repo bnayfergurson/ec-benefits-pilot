@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EC Benefits Pilot — Option Analysis</title>
+  <style>
+    :root {
+      --c1: #E11D48;
+      --c2: #0070F2;
+      --c3: #6E44FF;
+      --c4: #00875A;
+      --c1-bg: #FFF1F2;
+      --c2-bg: #EFF6FF;
+      --c3-bg: #F3EEFF;
+      --c4-bg: #ECFDF5;
+      --c1-border: #FECDD3;
+      --c2-border: #BFDBFE;
+      --c3-border: #DDD6FE;
+      --c4-border: #A7F3D0;
+      --surface: #F5F7FA;
+      --card: #FFFFFF;
+      --text: #111827;
+      --text-2: #6B7280;
+      --border: #E5E7EB;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* ── Header ── */
+    .hdr {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 28px 48px 24px;
+    }
+    .hdr h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .hdr-meta {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      font-size: 12px; color: var(--text-2);
+    }
+    .hdr-meta span::before { content: '· '; color: #D1D5DB; margin-right: 2px; }
+    .hdr-meta span:first-child::before { content: ''; }
+
+    /* ── Main layout ── */
+    .main { max-width: 1140px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    /* ── Prerequisites ── */
+    .prereq {
+      background: #FFF7ED; border: 1.5px solid #FB923C;
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;
+    }
+    .prereq-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .prereq-header h3 {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: #9A3412;
+    }
+    .prereq-header .prereq-sub {
+      font-size: 12px; color: #C2410C; font-weight: 400;
+    }
+    .prereq-items {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 760px;
+    }
+    .prereq-item {
+      background: #fff; border: 1px solid #FED7AA;
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .prereq-item .pi-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: #EA580C; margin-bottom: 4px;
+    }
+    .prereq-item .pi-q {
+      font-size: 13px; font-weight: 600; color: #1C1917; margin-bottom: 4px; line-height: 1.3;
+    }
+    .prereq-item .pi-list {
+      font-size: 11px; color: #78716C; line-height: 1.5; margin: 4px 0 0 0; padding-left: 16px;
+    }
+    .prereq-item .pi-list li { margin-bottom: 2px; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+    .tab {
+      flex: 1; padding: 16px 18px; border-radius: 12px;
+      border: 2px solid var(--border); background: var(--card);
+      cursor: pointer; text-align: left; transition: border-color .15s, background .15s;
+    }
+    .tab:hover { border-color: #9CA3AF; }
+    .tab-num {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--text-2); margin-bottom: 3px;
+    }
+    .tab-name { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .tab-sub { font-size: 12px; color: var(--text-2); }
+    .tab[data-opt="1"].on { border-color: var(--c1); background: var(--c1-bg); }
+    .tab[data-opt="2"].on { border-color: var(--c2); background: var(--c2-bg); }
+    .tab[data-opt="3"].on { border-color: var(--c3); background: var(--c3-bg); }
+    .tab[data-opt="4"].on { border-color: var(--c4); background: var(--c4-bg); }
+    .tab[data-opt="1"].on .tab-name { color: var(--c1); }
+    .tab[data-opt="2"].on .tab-name { color: var(--c2); }
+    .tab[data-opt="3"].on .tab-name { color: var(--c3); }
+    .tab[data-opt="4"].on .tab-name { color: var(--c4); }
+
+    /* ── Panels ── */
+    .panel { display: none; }
+    .panel.on { display: block; }
+
+    /* ── Section label ── */
+    .sec-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--text-2); margin-bottom: 12px;
+    }
+
+    /* ── Process flow ── */
+    .flow-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px 24px; margin-bottom: 16px;
+    }
+    .flow-track-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; margin-bottom: 10px; padding: 3px 10px;
+      border-radius: 20px; display: inline-block;
+    }
+    .track-a { background: var(--c2-bg); color: var(--c2); }
+    .track-b { background: var(--c3-bg); color: var(--c3); }
+    .flow-steps {
+      display: flex; align-items: stretch; gap: 0;
+      overflow-x: auto; padding-bottom: 4px;
+    }
+    .flow-step { flex: 1; min-width: 148px; display: flex; align-items: stretch; }
+    .step-inner {
+      flex: 1; padding: 12px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      margin-right: 0;
+    }
+    .flow-arrow {
+      display: flex; align-items: center; padding: 0 6px;
+      color: #9CA3AF; font-size: 16px; flex-shrink: 0;
+    }
+    .step-n {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; margin-bottom: 3px;
+    }
+    .step-t { font-size: 13px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
+    .step-d { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+    .step-d ul { list-style: none; padding: 0; margin-top: 3px; }
+    .step-d ul li { padding: 1px 0 1px 12px; position: relative; }
+    .step-d ul li::before { content: '•'; position: absolute; left: 0; color: #9CA3AF; }
+    .step-open { color: #D97706; font-weight: 600; }
+
+    .p1 .step-n { color: var(--c1); }
+    .p1 .step-inner { border-color: var(--c1-border); }
+    .p2 .step-n { color: var(--c2); }
+    .p2 .step-inner { border-color: var(--c2-border); }
+    .p3 .step-n { color: var(--c3); }
+    .p3 .step-inner { border-color: var(--c3-border); }
+    .p4a .step-n { color: var(--c2); }
+    .p4a .step-inner { border-color: var(--c2-border); }
+    .p4b .step-n { color: var(--c3); }
+    .p4b .step-inner { border-color: var(--c3-border); }
+
+    /* ── Logistics grid ── */
+    .lg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .lg-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px;
+    }
+    .lg-card h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: var(--text-2); margin-bottom: 10px;
+    }
+    .lg-card ul { list-style: none; }
+    .lg-card ul li {
+      font-size: 12.5px; padding: 5px 0 5px 16px; position: relative;
+      border-bottom: 1px solid var(--border); line-height: 1.4; color: #374151;
+    }
+    .lg-card ul li:last-child { border-bottom: none; }
+    .lg-card ul li::before { content: '•'; position: absolute; left: 0; color: #9CA3AF; }
+    .lg-card ul li.open-item { color: #92400E; }
+    .lg-card ul li.open-item::before { content: '?'; color: #D97706; font-weight: 700; }
+
+    /* ── Open questions ── */
+    .oq {
+      background: #FFFBEB; border: 1px solid #FCD34D;
+      border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+    }
+    .oq h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: #92400E; margin-bottom: 9px;
+    }
+    .oq ul { list-style: none; }
+    .oq ul li {
+      font-size: 12.5px; padding: 4px 0 4px 20px;
+      position: relative; color: #78350F; line-height: 1.4;
+    }
+    .oq ul li::before {
+      content: '?'; position: absolute; left: 0;
+      font-weight: 800; color: #D97706;
+    }
+
+    /* ── Comparison grid ── */
+    .comp-section { margin-top: 40px; }
+    .comp-section > h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .comp-section > p { font-size: 13px; color: var(--text-2); margin-bottom: 18px; }
+
+    /* ── At-a-glance recommendations ── */
+    .rec-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px; margin-bottom: 20px;
+    }
+    .rec-card {
+      border-radius: 10px; padding: 16px 18px;
+      border: 1.5px solid var(--border); background: var(--card);
+    }
+    .rec-card.rec-opt1 { border-color: var(--c1-border); background: var(--c1-bg); }
+    .rec-card.rec-opt2 { border-color: var(--c2-border); background: var(--c2-bg); }
+    .rec-card.rec-opt3 { border-color: var(--c3); background: var(--c3-bg); }
+    .rec-card.rec-opt4 { border-color: var(--c4-border); background: var(--c4-bg); }
+    .rec-card .rc-opt { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; margin-bottom: 3px; }
+    .rec-opt1 .rc-opt { color: var(--c1); }
+    .rec-opt2 .rc-opt { color: var(--c2); }
+    .rec-opt3 .rc-opt { color: var(--c3); }
+    .rec-opt4 .rc-opt { color: var(--c4); }
+    .rec-card .rc-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .rec-opt3 .rc-name::after { content: ' ★'; color: var(--c4); }
+    .rec-card .rc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-2); margin-bottom: 4px; }
+    .rec-card .rc-body { font-size: 12px; color: #374151; line-height: 1.5; }
+
+    .comp-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    table.comp { width: 100%; border-collapse: collapse; }
+    table.comp thead th {
+      padding: 13px 16px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      background: var(--surface); border-bottom: 2px solid var(--border);
+      text-align: left;
+    }
+    table.comp thead th:nth-child(2) { color: var(--c1); }
+    table.comp thead th:nth-child(3) { color: var(--c2); }
+    table.comp thead th:nth-child(4) { color: var(--c3); }
+    table.comp thead th:nth-child(5) { color: var(--c4); }
+    table.comp td {
+      padding: 11px 16px; font-size: 12.5px;
+      border-bottom: 1px solid var(--border); vertical-align: top;
+    }
+    table.comp tr:last-child td { border-bottom: none; }
+    table.comp tr:hover td { background: #FAFAFA; }
+    table.comp td:first-child {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--text-2); white-space: nowrap; width: 190px;
+    }
+    tr.rec-row td { background: #FAFAF0; border-bottom: 2px solid var(--border); }
+    tr.rec-row td:first-child { color: #78716C; }
+    tr.rec-row:hover td { background: #F5F5E8; }
+
+    .badge {
+      display: inline-block; padding: 2px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; margin-bottom: 3px;
+    }
+    .bl { background: #FEF3C7; color: #92400E; }
+    .bm { background: #DBEAFE; color: #1E40AF; }
+    .bh { background: #D1FAE5; color: #065F46; }
+    .bx { background: #FCE7F3; color: #9D174D; }
+    .cn { display: block; font-size: 11px; color: var(--text-2); margin-top: 2px; line-height: 1.4; }
+
+    /* ── Recommendation callout ── */
+    .rec-callout {
+      margin-top: 20px; background: var(--c4-bg);
+      border: 1.5px solid var(--c4); border-radius: 12px;
+      padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start;
+    }
+    .rec-star { font-size: 20px; line-height: 1.2; }
+    .rec-body h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--c4); margin-bottom: 6px;
+    }
+    .rec-body p { font-size: 13px; line-height: 1.6; color: #111827; }
+
+    /* ── Hybrid divider ── */
+    .track-sep {
+      border: none; border-top: 1px dashed #D1D5DB; margin: 18px 0;
+    }
+
+    /* ── Testing timeline bar ── */
+    .timeline-bar {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 24px; margin-bottom: 20px;
+      display: flex; gap: 10px;
+    }
+    .tl-phase {
+      flex: 1; padding: 12px 14px; border-radius: 8px;
+    }
+    .tl-w1 { background: var(--c2-bg); border: 1.5px solid var(--c2-border); }
+    .tl-w2 { background: var(--c3-bg); border: 1.5px solid var(--c3-border); }
+    .tl-w3 { background: var(--c4-bg); border: 1.5px solid var(--c4-border); }
+    .tl-phase .tl-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; margin-bottom: 3px; }
+    .tl-w1 .tl-label { color: var(--c2); }
+    .tl-w2 .tl-label { color: var(--c3); }
+    .tl-w3 .tl-label { color: var(--c4); }
+    .tl-phase .tl-dates { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .tl-phase .tl-desc { font-size: 11px; color: var(--text-2); line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>SAP Runs on SAP — EC Benefits Pilot Program: Option Analysis</h1>
+  <div class="hdr-meta">
+    <span>Scope: US SuccessFactors Employees (~400 eligible)</span>
+    <span>Pilot Window: January – April/May 2027</span>
+    <span>GA Target: August 2027</span>
+    <span>Draft for Internal Review</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ── Prerequisites ── -->
+  <div class="prereq">
+    <div class="prereq-header">
+      <h3>Resolve Before Choosing an Option</h3>
+      <span class="prereq-sub">— These decisions change what each option looks like in practice</span>
+    </div>
+    <div class="prereq-items">
+      <div class="prereq-item">
+        <div class="pi-label">Environment</div>
+        <div class="pi-q">Production or QA / lower environment?</div>
+        <ul class="pi-list">
+          <li>Options below are based on a test environment assumption</li>
+          <li>This has not been formally decided</li>
+          <li>QA environment requires sign-off before use</li>
+        </ul>
+      </div>
+      <div class="prereq-item">
+        <div class="pi-label">Feedback Capture</div>
+        <div class="pi-q">Can a survey be added at the conclusion of the EC Benefits enrollment experience?</div>
+        <ul class="pi-list">
+          <li>Preferred: survey in EC Benefits at end of enrollment (5 questions, 1–5 scale + freeform)</li>
+          <li>If unavailable, alternative survey tools must be identified</li>
+          <li>Feedback path: survey → Jira ticket <em>or</em> Aha enhancement card</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Testing Timeline ── -->
+  <div class="timeline-bar">
+    <div class="tl-phase tl-w1">
+      <div class="tl-label">Wave 1</div>
+      <div class="tl-dates">Jan 13 – Jan 31, 2027</div>
+      <div class="tl-desc">Weeks 2–4 of January · Testing begins across all options</div>
+    </div>
+    <div class="tl-phase tl-w2">
+      <div class="tl-label">Wave 2</div>
+      <div class="tl-dates">Feb 10 – Feb 28, 2027</div>
+      <div class="tl-desc">Weeks 2–4 of February · Second wave; time-elapsed scenarios begin</div>
+    </div>
+    <div class="tl-phase tl-w3">
+      <div class="tl-label">Open Window</div>
+      <div class="tl-dates">Mar 1 – Apr 30, 2027</div>
+      <div class="tl-desc">Two-month extended window · Continued access, feedback sessions, synthesis</div>
+    </div>
+  </div>
+
+  <!-- ── Tabs ── -->
+  <div class="tabs">
+    <button class="tab" data-opt="1" onclick="show(1)">
+      <div class="tab-num">Option 1</div>
+      <div class="tab-name">Free For All</div>
+      <div class="tab-sub">Open announcement to all SF employees</div>
+    </button>
+    <button class="tab" data-opt="2" onclick="show(2)">
+      <div class="tab-num">Option 2</div>
+      <div class="tab-name">Coffee Drip</div>
+      <div class="tab-sub">React to organic Benefitfocus activity</div>
+    </button>
+    <button class="tab" data-opt="3" onclick="show(3)">
+      <div class="tab-num">Option 3</div>
+      <div class="tab-name">Visibility Path</div>
+      <div class="tab-sub">Proactive cohort of up to 40 experts &amp; leaders</div>
+    </button>
+    <button class="tab" data-opt="4" onclick="show(4)">
+      <div class="tab-num">Option 4</div>
+      <div class="tab-name">Hybrid</div>
+      <div class="tab-sub">Both tracks running simultaneously</div>
+    </button>
+  </div>
+
+  <!-- ══════════════ PANEL 1 — Free For All ══════════════ -->
+  <div class="panel p1" id="p1">
+    <div class="flow-card">
+      <div class="sec-label">Process Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 1</div>
+            <div class="step-t">System-Wide Announcement</div>
+            <div class="step-d">
+              <ul>
+                <li>Single email to all ~400 SF employees</li>
+                <li>EC Benefits is open — come explore and share feedback</li>
+                <li>Includes access link to QA environment</li>
+                <li>No task assigned, no scheduling required</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 2</div>
+            <div class="step-t">Self-Directed Access</div>
+            <div class="step-d">
+              <ul>
+                <li>Employees access EC Benefits in QA at their own discretion</li>
+                <li>Explore any area freely — benefits summary, enrollment, life events</li>
+                <li>No scenario assigned, no completion window required</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 3</div>
+            <div class="step-t">Voluntary Feedback</div>
+            <div class="step-d">
+              <ul>
+                <li>Survey available at end of session (in EC Benefits if possible, or via link)</li>
+                <li>No required completion — fully opt-in</li>
+                <li>Feedback path: survey → Jira ticket <em>or</em> Aha enhancement card</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 4</div>
+            <div class="step-t">Ongoing Nudges</div>
+            <div class="step-d">
+              <ul>
+                <li>2–3 reminder emails over the pilot window</li>
+                <li>Optional: feature spotlight emails to encourage testing specific areas</li>
+                <li>Monthly open feedback session (opt-in)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 5</div>
+            <div class="step-t">Feedback Synthesis</div>
+            <div class="step-d">
+              <ul>
+                <li>Product reviews survey responses passively throughout pilot window</li>
+                <li>Themes surfaced to team — no individual tracking</li>
+                <li>End-of-pilot summary to leadership</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg-grid">
+      <div class="lg-card">
+        <h4>Participant Identification</h4>
+        <ul>
+          <li>No identification needed — all ~400 SF employees are eligible</li>
+          <li>Participation is entirely self-selected</li>
+          <li>No event trigger, no individual outreach</li>
+          <li>SAP HR sends the announcement; no follow-up targeting</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Environment &amp; Scenarios</h4>
+        <ul>
+          <li>Environment: QA (no real qualifying events — employees explore freely)</li>
+          <li>No scenarios assigned — employees decide what to test</li>
+          <li>Risk: priority scenarios may never be covered</li>
+          <li>Carrier file validation not applicable (no real elections)</li>
+          <li>Time-elapsed testing not applicable (no structured scenario sequencing)</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Communication Plan</h4>
+        <ul>
+          <li>Single system-wide launch announcement</li>
+          <li>2–3 reminder emails distributed over the pilot window</li>
+          <li>Optional: area-specific spotlight emails ("Have you tried enrolling in FSA?")</li>
+          <li>Monthly open feedback session (opt-in, low attendance expected)</li>
+          <li>Lowest communication effort of all four options</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Resource Requirements</h4>
+        <ul>
+          <li>No dedicated Project Manager required</li>
+          <li>SAP HR: sends announcement and reminder emails</li>
+          <li>Product: monitors feedback passively, hosts optional feedback sessions</li>
+          <li>QA environment must support broader access (~400 potential users)</li>
+          <li>Least overhead of all four options — but least control</li>
+        </ul>
+      </div>
+      <div class="lg-card" style="grid-column: 1 / -1;">
+        <h4>Testing Schedule</h4>
+        <ul>
+          <li><strong>Wave 1 — Jan 13–31:</strong> System-wide announcement; QA environment opens; employees begin self-directed exploration</li>
+          <li><strong>Wave 2 — Feb 10–28:</strong> Reminder nudge; feature spotlight email (e.g., "Have you tried FSA enrollment?"); optional open feedback session</li>
+          <li><strong>Open Window — Mar 1–Apr 30:</strong> Continued access; 1–2 additional reminder nudges; final call email mid-April; feedback synthesis</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oq">
+      <h4>Open Questions</h4>
+      <ul>
+        <li>Is the QA environment approved and stable enough to support up to ~400 self-directed users?</li>
+        <li>How do we drive meaningful engagement — without a specific task, most employees won't prioritize it</li>
+        <li>What minimum ask do we make of employees? (e.g., "Spend 15 minutes and answer 5 questions")</li>
+        <li>What areas or scenarios should employees be guided toward to maximize useful feedback?</li>
+        <li>How do we ensure employees understand this is a test environment — not their real benefits?</li>
+        <li>Will employees self-exclude, assuming "I don't have a benefit change right now so this doesn't apply to me"?</li>
+        <li>Would this test population need to continue testing post-H1 2027 — all participants, a subset, or an additional ~6-week window before GA?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ PANEL 2 — Coffee Drip ══════════════ -->
+  <div class="panel p2" id="p2">
+    <div class="flow-card">
+      <div class="sec-label">Process Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 1</div>
+            <div class="step-t">Weekly BF Report</div>
+            <div class="step-d">
+              <ul>
+                <li>SAP HR runs Benefitfocus change report</li>
+                <li>Surfaces SF employees with new hires, QLEs, or data/eligibility changes</li>
+                <li>Report runs on a weekly cadence</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 2</div>
+            <div class="step-t">Review &amp; Select</div>
+            <div class="step-d">
+              <ul>
+                <li>SAP HR reviews the weekly report</li>
+                <li>Cross-references against the isolated EC Benefits pilot group in SF</li>
+                <li>Selects employees to receive an invitation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 3</div>
+            <div class="step-t">Invitation Email</div>
+            <div class="step-d">
+              <ul>
+                <li>Personalized email sent (possibly from Rebecca Carr)</li>
+                <li>Asks employee to voluntarily repeat their action in EC Benefits</li>
+                <li>2-week window to complete</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 4</div>
+            <div class="step-t">2-Week Window</div>
+            <div class="step-d">
+              <ul>
+                <li>Employee completes equivalent action in EC Benefits (Production)</li>
+                <li>SAP HR + Product monitor activity</li>
+                <li>Carrier file output validated where applicable</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 5</div>
+            <div class="step-t">Feedback Capture</div>
+            <div class="step-d"><span class="step-open">Open item:</span> How will feedback be collected?
+              <ul>
+                <li>Preferred: in EC Benefits survey at end of enrollment</li>
+                <li>If not available: identify alternative survey tool</li>
+                <li>Path: survey → Jira ticket or Aha enhancement card</li>
+                <li>Monthly open feedback session (opt-in)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg-grid">
+      <div class="lg-card">
+        <h4>Participant Identification</h4>
+        <ul>
+          <li>~400 SF employees in scope</li>
+          <li>Entirely organic — triggered only by real qualifying events</li>
+          <li>Qualifying: new hire elections, QLEs, eligibility/data changes</li>
+          <li>SF population historically has low benefit-change activity</li>
+          <li>Estimated active invitations: 5–15 per month</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Environment &amp; Scenarios</h4>
+        <ul>
+          <li>Environment: Production (real employee benefit data)</li>
+          <li>Scenarios: uncontrolled — whatever life events occur</li>
+          <li>No ability to assign or pre-define test scenarios</li>
+          <li>Coverage gaps likely — low-frequency scenarios may never surface</li>
+          <li>Risk: employees may decline "doing it twice"</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Communication Plan</h4>
+        <ul>
+          <li>Trigger: weekly BF report output — no proactive outreach</li>
+          <li>Personalized invitation per qualifying employee</li>
+          <li>One follow-up reminder within 2-week window</li>
+          <li class="open-item">Feedback survey tool TBD — in EC Benefits preferred if available</li>
+          <li>Monthly open feedback session invite (opt-in)</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Resource Requirements</h4>
+        <ul>
+          <li>No dedicated Project Manager required</li>
+          <li>SAP HR: owns weekly report run and invitations</li>
+          <li>Product: monitors activity, reviews feedback</li>
+          <li>Rebecca Carr to send communications (TBC)</li>
+          <li>Lowest administrative overhead of all three options</li>
+        </ul>
+      </div>
+      <div class="lg-card" style="grid-column: 1 / -1;">
+        <h4>Testing Schedule</h4>
+        <ul>
+          <li><strong>Wave 1 — Jan 13–31:</strong> First BF report run; qualifying employees identified and invited; first cohort begins 2-week completion window in Production</li>
+          <li><strong>Wave 2 — Feb 10–28:</strong> Second BF report batch; second invitation wave; Wave 1 feedback reviewed and triaged</li>
+          <li><strong>Open Window — Mar 1–Apr 30:</strong> Ongoing weekly BF report runs; invitations continue as events occur; feedback consolidation and synthesis</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oq">
+      <h4>Open Questions</h4>
+      <ul>
+        <li>Who owns the weekly BF report run — and is this already automated?</li>
+        <li>Will employees be willing to repeat an action they just completed in Benefitfocus?</li>
+        <li>Is there a monitoring mechanism in place to track participant activity in EC Benefits?</li>
+        <li>What is the carrier file validation process for pilot participants?</li>
+        <li>Who approves the invitation email and what is the confirmation timeline?</li>
+        <li>Can a survey be embedded at the conclusion of the EC Benefits enrollment experience?</li>
+        <li>If an in EC Benefits survey is not available, what survey tools are accessible to the team?</li>
+        <li>How will survey feedback be routed? Define the path: survey response → Jira ticket or Aha enhancement card.</li>
+        <li>Would this test population need to continue testing post-H1 2027 — all participants, a subset, or an additional ~6-week window before GA?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ PANEL 3 — Visibility Path ══════════════ -->
+  <div class="panel p3" id="p3">
+    <div class="flow-card">
+      <div class="sec-label">Process Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 1</div>
+            <div class="step-t">Identify 40 Participants</div>
+            <div class="step-d">
+              <ul>
+                <li>Up to 40 participants proactively selected</li>
+                <li>VPs, C-suite, technical experts, and SF engineers working on the solution</li>
+                <li>SAP HR manages the participant list</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 2</div>
+            <div class="step-t">Executive Invitation</div>
+            <div class="step-d">
+              <ul>
+                <li>Formal invite from senior sponsor</li>
+                <li>Low burden, clear purpose</li>
+                <li>Framed as shaping the experience for all SAP US colleagues before August go-live</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 3</div>
+            <div class="step-t">Kickoff Call</div>
+            <div class="step-d">Group session:
+              <ul>
+                <li>EC Benefits walkthrough</li>
+                <li>Demo of Benefitfocus experience provided as a reference</li>
+                <li>Scenario packet distribution</li>
+                <li>QA environment access setup</li>
+                <li>Expectations &amp; feedback process</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 4</div>
+            <div class="step-t">Assigned Scenarios</div>
+            <div class="step-d">
+              <ul>
+                <li>Each participant receives 2–5 specific test scenarios</li>
+                <li>Includes <strong>time-elapsed scenarios</strong> — change in payroll cycle 1, follow-up ~1 month later in cycle 2</li>
+                <li>Enables end-to-end testing and carrier file scenario validation</li>
+                <li>Completed in QA environment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-inner">
+            <div class="step-n">Step 5</div>
+            <div class="step-t">Structured Feedback</div>
+            <div class="step-d">
+              <ul>
+                <li>Survey after each scenario</li>
+                <li>Monthly live feedback sessions</li>
+                <li>Project Manager consolidates and routes to Product</li>
+                <li>Final debrief to leadership</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg-grid">
+      <div class="lg-card">
+        <h4>Participant Identification</h4>
+        <ul>
+          <li>Up to 40 participants — proactively selected, not event-driven</li>
+          <li>VPs, C-suite, technical experts, and SF engineers working on the solution</li>
+          <li>No dependency on BF activity — recruitment begins in December</li>
+          <li>SAP HR manages the participant list</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Environment &amp; Scenarios</h4>
+        <ul>
+          <li>Environment: QA / lower environment (requires approval)</li>
+          <li>No risk to real employee benefit data</li>
+          <li>Scenarios defined by Product + sync with Marius and Nikki (December)</li>
+          <li>Types: new hire, enrollment, QLE, FSA, HSA</li>
+          <li>Each participant: 2–5 assigned scenarios = 80–200 completions</li>
+          <li>Time-elapsed scenarios span two payroll cycles (~1 month apart)</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Communication Plan</h4>
+        <ul>
+          <li>T-4 weeks: Executive invitation from senior sponsor</li>
+          <li>T-2 weeks: Confirmation &amp; kickoff logistics</li>
+          <li>Kickoff: Group session including EC Benefits walkthrough and Benefitfocus demo</li>
+          <li>Ongoing: Weekly Project Manager nudges; scenario completion tracking</li>
+          <li>Post-scenario: Survey per completed scenario</li>
+          <li>Monthly: Live feedback session (open forum)</li>
+          <li>End of pilot: Results debrief to leadership</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Resource Requirements</h4>
+        <ul>
+          <li>Dedicated Project Manager required</li>
+          <li>Project Manager owns: recruitment, scheduling, comms, nudges, debrief</li>
+          <li>Product: scenario definition, session participation, feedback synthesis</li>
+          <li>SAP HR: QA environment access, data configuration</li>
+          <li>QA environment approval needed before December planning</li>
+        </ul>
+      </div>
+      <div class="lg-card" style="grid-column: 1 / -1;">
+        <h4>Testing Schedule</h4>
+        <ul>
+          <li><strong>Wave 1 — Jan 13–31:</strong> Kickoff call; Phase 1 scenarios distributed; participants begin Payroll Cycle 1 testing (new hire, enrollment, QLE)</li>
+          <li><strong>Wave 2 — Feb 10–28:</strong> Phase 2 time-elapsed scenarios begin (Payroll Cycle 2 follow-up, ~4–6 weeks after Cycle 1); Phase 1 feedback synthesis; mid-pilot live feedback session</li>
+          <li><strong>Open Window — Mar 1–Apr 30:</strong> Extended access for remaining or additional scenarios; ongoing monthly feedback sessions; final debrief prep; end-of-pilot leadership report</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oq">
+      <h4>Open Questions</h4>
+      <ul>
+        <li>Is QA / lower environment testing approved? Who provides that approval?</li>
+        <li>Who will serve as the dedicated Project Manager for this track?</li>
+        <li>What scenarios will be fully available to test by January?</li>
+        <li>Who is the executive sponsor for the invitation — who signs the ask?</li>
+        <li>How do we set expectations that feedback does not guarantee changes before GA?</li>
+        <li>Would this test population need to continue testing post-H1 2027 — all participants, a subset, or an additional ~6-week window before GA?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ PANEL 4 — Hybrid ══════════════ -->
+  <div class="panel" id="p4">
+    <div class="flow-card">
+      <div class="sec-label">Process Flow — Two Parallel Tracks</div>
+      <div class="flow-track-label track-a">Track A — Organic (Coffee Drip)</div>
+      <div class="flow-steps" style="margin-bottom: 18px;">
+        <div class="flow-step p4a">
+          <div class="step-inner">
+            <div class="step-n">A1</div>
+            <div class="step-t">Weekly BF Report</div>
+            <div class="step-d">Runs continuously — identifies organic events in SF employee population</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4a">
+          <div class="step-inner">
+            <div class="step-n">A2</div>
+            <div class="step-t">Review &amp; Invite</div>
+            <div class="step-d">SAP HR selects qualifying employees; personalized invitation to repeat in EC Benefits (Production)</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4a">
+          <div class="step-inner">
+            <div class="step-n">A3</div>
+            <div class="step-t">Organic Execution</div>
+            <div class="step-d">2-week window. Employee completes action. Feedback captured via survey (tool TBD).</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4a">
+          <div class="step-inner">
+            <div class="step-n">A4</div>
+            <div class="step-t">Feedback to Pool</div>
+            <div class="step-d">Survey results consolidated into shared feedback repository → Jira / Aha cards</div>
+          </div>
+        </div>
+      </div>
+      <hr class="track-sep">
+      <div class="flow-track-label track-b" style="margin-top:4px;">Track B — Proactive (Visibility Path)</div>
+      <div class="flow-steps">
+        <div class="flow-step p4b">
+          <div class="step-inner">
+            <div class="step-n">B1</div>
+            <div class="step-t">Recruit 40 Participants</div>
+            <div class="step-d">VPs/C-suite + technical experts. Runs independently of Track A cadence.</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4b">
+          <div class="step-inner">
+            <div class="step-n">B2</div>
+            <div class="step-t">Kickoff &amp; Scenarios</div>
+            <div class="step-d">Kickoff call. Scenario packets issued. Testing in QA environment.</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4b">
+          <div class="step-inner">
+            <div class="step-n">B3</div>
+            <div class="step-t">Controlled Testing</div>
+            <div class="step-d">Project Manager tracks scenario completion. Weekly nudges. Monthly live feedback sessions.</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step p4b">
+          <div class="step-inner">
+            <div class="step-n">B4</div>
+            <div class="step-t">Feedback to Pool</div>
+            <div class="step-d">Consolidated with Track A results. Combined debrief to leadership.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg-grid">
+      <div class="lg-card">
+        <h4>Participant Pool</h4>
+        <ul>
+          <li>Track A: ~400 SF employees (organic, event-driven)</li>
+          <li>Track B: Up to 40 VPs/C-suite + technical experts (proactive)</li>
+          <li>Tracks run concurrently — no conflicts between them</li>
+          <li>Total addressable feedback: 40+ active + unlimited organic</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Environments</h4>
+        <ul>
+          <li>Track A: Production (real benefit data, real events)</li>
+          <li>Track B: QA / lower environment (requires approval)</li>
+          <li>Two environments must be configured and validated</li>
+          <li>Data integrity managed separately per track</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Communication Plan</h4>
+        <ul>
+          <li>Two distinct communication streams running in parallel</li>
+          <li>Track A: Event-triggered invitations (low volume, SAP HR managed)</li>
+          <li>Track B: Full executive campaign (Project Manager managed)</li>
+          <li>Shared: monthly open feedback sessions pull from both tracks</li>
+          <li>Consolidated reporting to stakeholders combines both streams</li>
+        </ul>
+      </div>
+      <div class="lg-card">
+        <h4>Resource Requirements</h4>
+        <ul>
+          <li>Dedicated Project Manager required (owns Track B + overall program)</li>
+          <li>SAP HR owns Track A operations independently</li>
+          <li>Product: scenario definition, session participation, feedback synthesis</li>
+          <li>Highest total overhead of all four options</li>
+          <li>Highest return: maximum scenario coverage + executive visibility</li>
+        </ul>
+      </div>
+      <div class="lg-card" style="grid-column: 1 / -1;">
+        <h4>Testing Schedule</h4>
+        <ul>
+          <li><strong>Wave 1 — Jan 13–31:</strong> Track A: first BF invitations sent to qualifying employees; Track B: kickoff call and Phase 1 scenarios begin</li>
+          <li><strong>Wave 2 — Feb 10–28:</strong> Track A: second BF invitation batch; Track B: Phase 2 time-elapsed scenarios (Payroll Cycle 2); combined mid-pilot feedback session</li>
+          <li><strong>Open Window — Mar 1–Apr 30:</strong> Track A ongoing BF-triggered invitations; Track B extended testing and monthly sessions; consolidated end-of-pilot debrief to leadership</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oq">
+      <h4>Open Questions</h4>
+      <ul>
+        <li>All open questions from Options 2 and 3 apply</li>
+        <li>Is there sufficient Project Manager capacity to run both tracks simultaneously?</li>
+        <li>How will feedback from both tracks be consolidated and prioritized without duplication?</li>
+        <li>Can the team support two parallel environments from a data and support perspective?</li>
+        <li>Would this test population need to continue testing post-H1 2027 — all participants, a subset, or an additional ~6-week window before GA?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ COMPARISON GRID ══════════════ -->
+  <div class="comp-section">
+    <h2>Option Comparison</h2>
+    <p>All four options evaluated across dimensions most relevant to pilot success.</p>
+
+    <!-- At-a-glance recommendations -->
+    <div class="rec-grid">
+      <div class="rec-card rec-opt1">
+        <div class="rc-opt">Option 1</div>
+        <div class="rc-name">Free For All</div>
+        <div class="rc-label">Choose this if…</div>
+        <div class="rc-body">The goal is maximum employee awareness with minimal coordination — or as a complement to another option to broaden reach. Best suited when volume of impressions matters more than scenario control.</div>
+      </div>
+      <div class="rec-card rec-opt2">
+        <div class="rc-opt">Option 2</div>
+        <div class="rc-name">Coffee Drip</div>
+        <div class="rc-label">Choose this if…</div>
+        <div class="rc-body">Team capacity is limited and a lightweight, low-overhead proof-of-concept is the goal — or if Project Manager and QA environment approvals cannot be secured before January.</div>
+      </div>
+      <div class="rec-card rec-opt3">
+        <div class="rc-opt">Option 3 — Recommended</div>
+        <div class="rc-name">Visibility Path</div>
+        <div class="rc-label">Choose this if…</div>
+        <div class="rc-body">Maximum quality feedback, controlled test scenarios, and executive visibility into EC Benefits are the priority — and a dedicated Project Manager can be identified before December.</div>
+      </div>
+      <div class="rec-card rec-opt4">
+        <div class="rc-opt">Option 4</div>
+        <div class="rc-name">Hybrid</div>
+        <div class="rc-label">Choose this if…</div>
+        <div class="rc-body">Both a dedicated Project Manager and QA environment access are confirmed — and the team wants the highest possible validation coverage and scenario breadth before GA.</div>
+      </div>
+    </div>
+
+    <div class="comp-wrap">
+      <table class="comp">
+        <thead>
+          <tr>
+            <th style="width:190px;">Dimension</th>
+            <th>Option 1 — Free For All</th>
+            <th>Option 2 — Coffee Drip</th>
+            <th>Option 3 — Visibility Path</th>
+            <th>Option 4 — Hybrid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feedback Volume<br>(first 60 days)</td>
+            <td><span class="badge bm">Variable</span><span class="cn">Depends entirely on self-selection; volume could be high but feedback depth and quality are uncertain</span></td>
+            <td><span class="badge bl">Low</span><span class="cn">5–15 participants/month at best; fully dependent on organic event rate in SF employee population</span></td>
+            <td><span class="badge bh">High</span><span class="cn">Up to 40 active participants from Day 1; controlled cadence delivers 80–200 scenario completions in month 1</span></td>
+            <td><span class="badge bh">High</span><span class="cn">Track B delivers same early volume as Option 3; Track A adds incremental organic data over time</span></td>
+          </tr>
+          <tr>
+            <td>Scenario Control</td>
+            <td><span class="badge bx">None</span><span class="cn">Employees choose what to explore — no scenario definition, no coverage targeting</span></td>
+            <td><span class="badge bx">None</span><span class="cn">Entirely dependent on real life events — no pre-definition or coverage targeting possible</span></td>
+            <td><span class="badge bh">Full</span><span class="cn">Product + SAP HR define scenario library in advance; participants assigned specific tasks in QA</span></td>
+            <td><span class="badge bh">Full (Track B)</span><span class="cn">Track B fully controlled; Track A supplements with organic, uncontrolled scenarios</span></td>
+          </tr>
+          <tr>
+            <td>Scenario Quantity<br>at Launch</td>
+            <td><span class="badge bx">Unknown</span><span class="cn">No scenario library — coverage is entirely determined by what employees choose to click on</span></td>
+            <td><span class="badge bl">Low</span><span class="cn">Only scenarios triggered by actual events in first weeks; coverage gaps likely through April</span></td>
+            <td><span class="badge bh">High</span><span class="cn">Defined scenario library ready at kickoff; broad coverage from week 2 onward</span></td>
+            <td><span class="badge bh">High</span><span class="cn">Defined library from Track B drives coverage from day 1; Track A adds breadth over pilot window</span></td>
+          </tr>
+          <tr>
+            <td>Carrier File &amp;<br>Time-Elapsed Testing</td>
+            <td><span class="badge bx">Not applicable</span><span class="cn">No structured scenarios, no real elections — carrier file and time-elapsed testing cannot be executed in this model</span></td>
+            <td><span class="badge bm">Partial</span><span class="cn">Carrier file validation possible for organic events, but timing is uncontrolled — no ability to design time-elapsed scenarios across payroll cycles</span></td>
+            <td><span class="badge bh">Yes — by design</span><span class="cn">Time-elapsed scenarios pre-scheduled across payroll cycles; carrier file testing built directly into the scenario library</span></td>
+            <td><span class="badge bh">Yes — Track B</span><span class="cn">Track B enables full time-elapsed + carrier file design; Track A adds organic carrier file validation in parallel</span></td>
+          </tr>
+          <tr>
+            <td>Communication Effort</td>
+            <td><span class="badge bh">Very Low</span><span class="cn">Single announcement email + 2–3 reminder nudges; no individual outreach or tracking</span></td>
+            <td><span class="badge bl">Low</span><span class="cn">Targeted, event-triggered emails only; no proactive outreach or campaign coordination required</span></td>
+            <td><span class="badge bm">High</span><span class="cn">Full campaign: invitation, kickoff, scenario packets, weekly nudges, monthly sessions, debrief</span></td>
+            <td><span class="badge bx">Very High</span><span class="cn">Two parallel communication streams; highest total coordination effort across all options</span></td>
+          </tr>
+          <tr>
+            <td>Dedicated Project Manager<br>Required</td>
+            <td><span class="badge bh">No</span><span class="cn">SAP HR sends announcement; Product reviews feedback passively — no dedicated coordination role needed</span></td>
+            <td><span class="badge bh">No</span><span class="cn">SAP HR + Product can manage without a dedicated Project Manager</span></td>
+            <td><span class="badge bl">Yes</span><span class="cn">Project Manager required to own recruitment, scheduling, comms, session facilitation, and debrief. Product cannot absorb this.</span></td>
+            <td><span class="badge bl">Yes</span><span class="cn">Same Project Manager requirement as Option 3; also coordinates with SAP HR on Track A reporting</span></td>
+          </tr>
+          <tr>
+            <td>Test Environment</td>
+            <td><span class="badge bm">QA (pending approval)</span><span class="cn">No real elections driving activity — QA required. Must support broader access (~400 potential users).</span></td>
+            <td><span class="badge bm">Production</span><span class="cn">Real data; no risk to employee records but limits scenario flexibility</span></td>
+            <td><span class="badge bm">QA (pending approval)</span><span class="cn">Safer for testing; avoids any production data risk. Requires sign-off.</span></td>
+            <td><span class="badge bm">Both</span><span class="cn">Track A in Production; Track B in QA. Two environments must be maintained and validated.</span></td>
+          </tr>
+          <tr>
+            <td>Executive Visibility</td>
+            <td><span class="badge bl">Low</span><span class="cn">Executives may participate but are not targeted — no intentional leadership engagement or sponsorship signal</span></td>
+            <td><span class="badge bl">Low</span><span class="cn">No intentional executive engagement; leadership not in the pilot experience</span></td>
+            <td><span class="badge bh">High</span><span class="cn">VPs and C-suite are the pilot — creates direct sponsorship signal and organizational awareness ahead of GA</span></td>
+            <td><span class="badge bh">High</span><span class="cn">Track B delivers identical executive visibility to Option 3</span></td>
+          </tr>
+          <tr>
+            <td>Time to First<br>Feedback</td>
+            <td><span class="badge bh">Same week</span><span class="cn">Feedback can arrive immediately after the announcement — fastest time to first response, but lowest predictability</span></td>
+            <td><span class="badge bl">4–6 weeks</span><span class="cn">Depends on when first qualifying event occurs after January launch</span></td>
+            <td><span class="badge bh">2 weeks (Phase 1)</span><span class="cn">First scenario completions and surveys in weeks 1–2; time-elapsed scenarios begin at weeks 5–6 (after one full payroll cycle)</span></td>
+            <td><span class="badge bh">2 weeks (Phase 1)</span><span class="cn">Track B: first feedback in weeks 1–2; time-elapsed scenarios execute at weeks 5–6. Track A organic data supplements throughout.</span></td>
+          </tr>
+          <tr>
+            <td>HR Admin Practices<br>&amp; Acclimation</td>
+            <td><span class="badge bl">Low</span><span class="cn">No structured admin testing — depends on whether HR employees self-select to explore admin features</span></td>
+            <td><span class="badge bl">Low</span><span class="cn">No structured exposure to admin console or reporting; HR admin testing is incidental and dependent on what organic events trigger</span></td>
+            <td><span class="badge bh">Yes — by design</span><span class="cn">Scenarios can include admin console walkthroughs and report generation; HR teams acclimate to ongoing admin practices alongside participant testing</span></td>
+            <td><span class="badge bh">Yes — Track B</span><span class="cn">Track B enables structured HR admin acclimation; Track A provides limited organic exposure through real event processing</span></td>
+          </tr>
+          <tr>
+            <td>Engagement Risk</td>
+            <td><span class="badge bx">Very High</span><span class="cn">Without a specific task or personal ask, most employees will not prioritize exploring EC Benefits on their own — announcement fatigue is a significant risk</span></td>
+            <td><span class="badge bx">High</span><span class="cn">Employees asked to repeat what they just did in Benefitfocus — opt-out and low response rates are a real risk</span></td>
+            <td><span class="badge bm">Medium</span><span class="cn">Executives are time-constrained; strong framing, light burden, and Project Manager follow-up are essential to completion</span></td>
+            <td><span class="badge bm">Medium</span><span class="cn">Track B carries same executive availability risk; Track A has same repeat-action risk — managed by Project Manager for Track B</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rec-callout">
+      <div class="rec-star">★</div>
+      <div class="rec-body">
+        <h4>Product Team Recommendation — Option 3 (Visibility Path)</h4>
+        <p>Option 3 delivers the highest quality feedback in the shortest time, gives the team full control over test scenarios, and creates direct executive visibility into EC Benefits before the August 2027 GA. The key dependencies — a dedicated Project Manager and QA environment approval — are manageable and worth pursuing. Option 4 is the ceiling if Project Manager capacity allows. Option 1 is a low-overhead complement worth layering on top of any other option to drive broader awareness, but should not stand alone if meaningful scenario coverage and carrier file testing are required. Option 2 is the fallback if all other dependencies cannot be resolved before January.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function show(n) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    const pid = n === 4 ? 'p4' : 'p' + n;
+    document.getElementById(pid).classList.add('on');
+    document.querySelector('.tab[data-opt="' + n + '"]').classList.add('on');
+  }
+  show(3);
+</script>
+</body>
+</html>
